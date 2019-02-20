@@ -1,4 +1,3 @@
-from twstock_ import crawler
-from twstock_ import StockStructure
+from twstock import crawler
 
-from  twstock_.crawler import CNYESCrawler
+from twstock.crawler import CNYESCrawler
