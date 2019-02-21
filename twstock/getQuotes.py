@@ -1,16 +1,16 @@
 import requests
-from collections import namedtuple
-from io import StringIO
 import pandas as pd
+import time
+from collections import namedtuple
 
 
 AllQuote = namedtuple('DateQuote', ['sid', 'name', 'volume', 'transactions', 'value',
                                     'open', 'high', 'low', 'close', 'plusmn', 'change',
                                     'lBuy', 'lBuyAmount', 'lSale', 'lSaleAmount', 'pe_ratio'])
-StockQuote = namedtuple('Quote', ['date', 'volume', 'value', 'open', 'high', 'low', 'close',
-                                  ])
+StockQuote = namedtuple('Quote', ['date', 'volume', 'value', 'open', 'high', 'low', 'close', 'change', 'amount'])
 
-def getAllQuote(date: str):
+
+def getAllQuote(date):
     print('get ' + str(date) + ' quote')
     url = 'http://www.twse.com.tw/exchangeReport/MI_INDEX?response=csv&date=%s&type=ALL'
     params = {'date': date,
@@ -28,14 +28,20 @@ def getAllQuote(date: str):
     return date_quote
 
 
-def getStockQuote(sid: str, date: str):
-    url = 'http://www.twse.com.tw/exchangeReport/STOCK_DAY?date=20190101&stockNo=2330'
+def getStockQuote(sid, year, month):
+    url = 'http://www.twse.com.tw/exchangeReport/STOCK_DAY'
     params = {'stockNo': sid,
-              'date': date,
+              'date': '%d%02d01' % (year, month),
               'response': 'json'}
 
     req = requests.get(url, params=params)
+    data = req.json()
+    if data['stat'] == 'OK':
+        return [StockQuote(*row) for row in data['data']]
+    else:
+        return 0
 
-data = getAllQuote('20180131')
+# data = getAllQuote('20180131')
+data = getStockQuote(2330, 2018, 12)
 df = pd.DataFrame(data)
 print(df)
