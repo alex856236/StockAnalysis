@@ -42,11 +42,11 @@ class CNYESCrawler():
         data[2] = float(data[2].replace(',', ''))  # high
         data[3] = float(data[3].replace(',', ''))  # low
         data[4] = float(data[4].replace(',', ''))  # close
-        data[5] = float(data[5])                   # change
-        data[6] = float(data[6].replace('%', ''))  # increase
-        data[7] = int(data[7].replace(',', ''))    # transaction
-        data[8] = int(data[8].replace(',', ''))    # amount
-        data[9] = float(data[9])                   # pe_ratio
+        data[5] = float(data[5])                   # change 漲跌
+        data[6] = float(data[6].replace('%', ''))  # increase 漲跌幅
+        data[7] = int(data[7].replace(',', ''))    # transaction 成交量
+        data[8] = int(data[8].replace(',', ''))    # amount 成交金額
+        data[9] = float(data[9])                   # pe_ratio 本益比
         return QUOTETUPLE(*data)
 
     def purify(self, raw_data):
