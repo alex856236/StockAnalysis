@@ -2,6 +2,11 @@
 Analysis for Taiwan stock
 
 每日台股行情說明
+<style>
+td{
+    word-break: keep-all;
+}
+</style>
 
 <table>
     <tr>
